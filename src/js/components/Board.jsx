@@ -8,11 +8,11 @@ var HTML5Backend = require('react-dnd-html5-backend');
 var Board = React.createClass({
 
     render: function(){
-
+       
        return (
           <div style={{
-            width:'800px',
-            height:'800px',
+            width:'40em',
+            height:'40em',
             display: 'flex',
             flexWrap: 'wrap'
           }}>

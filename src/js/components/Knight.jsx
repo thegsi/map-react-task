@@ -6,7 +6,7 @@ var DragSource = require('react-dnd').DragSource;
 
 var knightSource = {
   beginDrag: function(props){
-    
+
     return {};
   }
 };
@@ -30,8 +30,8 @@ var Knight = React.createClass({
 
     var knightColour = (this.props.color === "black") ? "white" : "black";
     var knightStyle = {
-         opacity: isDragging ? 0.5 : 1,
-          backgroundColor: knightColour,
+          opacity: isDragging ? 0.5 : 1,
+          backgroundColor: "#433",
           fontSize: "3em",
           cursor: 'move'
         };
