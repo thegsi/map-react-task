@@ -10,8 +10,8 @@ var Square = React.createClass({
     var squareStyle = {
       backgroundColor: this.props.black,
        color: this.props.black,
-       width: '6em',
-       height: '6em'
+       width: '100px',
+       height: '100px'
     };
 
     return (
