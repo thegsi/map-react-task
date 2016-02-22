@@ -1,7 +1,13 @@
-import React, { Component } from 'react';
+'use strict';
 
-export default class Knight extends Component {
-  render(){
-    return <span>♘</span>;
-  }
-}
+var React       = require('react');
+var ReactDOM    = require('react-dom');
+var rootElement = document.getElementById('react-content');
+var SmartComponent = require('./components/SmartComponent.jsx');
+
+
+  ReactDOM.render(
+
+  <SmartComponent />,
+    rootElement
+  )

@@ -10,8 +10,6 @@ shallowRenderer.render(<Square />);
 
 let squareRender = shallowRenderer.getRenderOutput();
 
-console.log('squareRender', squareRender.type);
-
 test('Square exists', t => {
   t.ok(squareRender, 'squareRender render object exists');
   t.equal(Object.keys(squareRender.props)[0], 'style', 'server loads ok');
