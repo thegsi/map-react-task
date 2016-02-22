@@ -11,3 +11,9 @@ npm run dev:start
 
 In browser go to:
 localhost:8080/public
+
+To run tests:
+
+```
+npm run test
+```
