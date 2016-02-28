@@ -8,15 +8,12 @@ var Marker = require("react-google-maps").Marker;
 
 var SimpleMap = function (props) {
 
-  console.log('SimpleMap props', props);
-
   return (
     <section style={{height: "200px"}}>
       <GoogleMapLoader
-         containerElement={<div {...this.props} style={{height: "100%"}}/>}
+         containerElement={<div {...props} style={{height: "100%"}}/>}
          googleMapElement={
-           <GoogleMap ref={map => console.log(map)} defaultZoom={3} defaultCenter={{lat:-25.363882, lng: 131.044922}} >
-
+           <GoogleMap ref={map => console.log("GoogleMap", map)} defaultZoom={3} defaultCenter={{lat:55.936152, lng: -3.1744107}} >
              {props.markers.map((marker, index) => {
                return (
                  <Marker {...marker} />

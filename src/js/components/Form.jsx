@@ -16,6 +16,7 @@ var AddressInputForm  = React.createClass({
   },
 
   submit: function (addressData) {
+
     this.props.setStatewithGeoCode(addressData);
   },
 
