@@ -1,19 +1,22 @@
-# React Chess
 
-To run locally:
-```
-git clone https://github.com/thegsi/react-chess.git
-```
-cd to react-chess root directory
-```
-npm run dev:start
-```
+Create a front end application using React to geocode addresses and plot them on a map.
+Nice to have - Style the application using Material Design principles
+Optional extra - find geographic centre point of the entered addresses
 
-In browser go to:
-localhost:8080/public
+Demonstrate competency:
+Using multiple libraries
+Working with Web APIs
+Using React Components
+Writing tests for your code
 
-To run tests:
+Keen to see:
+Approach to problem solving and implementation
+Creative thinking
+Timely execution
 
-```
-npm run test
-```
+Library and Resource suggestions:
+Mapbox-React
+Alternative - React Google Maps
+Material-UI
+Turfjs
+Material Design Guidelines
