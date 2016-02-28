@@ -1,18 +1,84 @@
 var React       = require('react');
 var Component = require('react').Component;
+//var env = require('env2')('.env');
 
+var InputForm = require('./Form.jsx');
+//var Markers = require('./Markers.jsx');
 var SimpleMap = require('./SimpleMapRender.jsx');
-var GoogleMapsAPI = require('./GoogleMapsAPI.jsx');
+
 
 var SmartComponent = React.createClass({
+
+  getInitialState: function() {
+      return {
+               markers:[{
+                 position: {
+                   lat: "55.936152",
+                   lng: "-3.1744107"
+                 },
+                 key: "blacket",
+                 defaultAnimation: 2
+               }],
+               canSubmit: false
+             }
+  },
+
+  enableButton: function () {
+      this.setState({
+        canSubmit: true
+      });
+  },
+
+  disableButton: function () {
+    this.setState({
+      canSubmit: false
+    });
+  },
+
+
+  setStatewithGeoCode: function(addressData){
+
+    var houseNumber = addressData.House-Number;
+    var street = "+" + addressData.Street.split(' ').join('+')  + "+";
+    var city = addressData.City;
+
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + houseNumber + street + city + "&components=country:UK&key=" + "AIzaSyDtNrUsWErL8UslNzkv80B7ZstKPLOppEQ";
+
+
+    var that = this;
+    $.ajax({
+      url: url,
+      type: 'get',
+      dataType: 'json',
+      success: function(result){
+        //console.log('setStatewithGeoCode', result.results);
+        console.log('setStatewithGeoCode 55.936152', result.results[0].geometry.location.lat);
+        console.log('setStatewithGeoCode -3.1744107', result.results[0].geometry.location.lng);
+        var lat = result.results[0].geometry.location.lat;
+        var lng = result.results[0].geometry.location.lng;
+
+        that.setState({
+                      markers:[{
+                        position: {
+                          lat: lat,
+                          lng: lng
+                        },
+                        key: "blacket",
+                        defaultAnimation: 2
+                      }]
+                     })
+      }
+    })
+
+  },
 
 
 render: function(){
 
   return (
           <div>
-            <SimpleMap />
-            <GoogleMapsAPI />
+            <InputForm canSubmit={this.state.canSubmit} enableButton={this.enableButton} disableButton={this.disableButton} setStatewithGeoCode={this.setStatewithGeoCode} />
+            <SimpleMap markers={this.state.markers} />
           </div>
         )
   }
