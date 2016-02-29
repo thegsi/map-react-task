@@ -7,7 +7,7 @@ test("simple server running", function(t) { // t
         method: "GET",
         url: "/"
     };
-    // server.inject lets you similate an http request
+    // server.inject lets you simulate an http request
     server.inject(options, function(response) {
         t.equal(response.statusCode, 200, "200 status code returned");  //  Expect http response status code to be 200 ("Ok")
         // setTimeout(function(){
@@ -22,7 +22,7 @@ test("public served", function(t) { // t
         method: "GET",
         url: "/index.html"
     };
-    // server.inject lets you similate an http request
+    // server.inject lets you simulate an http request
     server.inject(options, function(response) {
         t.equal(response.statusCode, 200, "200 status code returned");  //  Expect http response status code to be 200 ("Ok")
         // setTimeout(function(){

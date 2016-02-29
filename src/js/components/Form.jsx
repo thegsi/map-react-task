@@ -1,10 +1,21 @@
 var React       = require('react');
+var PropTypes = React.PropTypes;
 
 var Formsy = require('formsy-react');
 var Input = require('formsy-react-components').Input;
 
+var mui = require('material-ui');
+var RaisedButton = mui.RaisedButton;
+
+
 var AddressInputForm  = React.createClass({
 
+  propTypes:{
+    setStatewithGeoCode: React.PropTypes.func,
+    canSubmit: React.PropTypes.bool,
+    enableButton: React.PropTypes.func,
+    disableButton: React.PropTypes.func
+  },
 
   enableButton: function () {
       this.props.enableButton();
@@ -12,7 +23,7 @@ var AddressInputForm  = React.createClass({
 
   disableButton: function () {
 
-    //this.props.disableButton();
+    this.props.disableButton();
   },
 
   submit: function (addressData) {
@@ -42,26 +53,14 @@ var AddressInputForm  = React.createClass({
                   value=""
                   type="text"
                   required required/>
-              <button type="submit" id="inputButtonGeocode"  disabled={!this.props.canSubmit}>Click to Geocode</button>
-            </Formsy.Form>
-          </div>
+                <button type="submit" id="inputButtonGeocode"  disabled={!this.props.canSubmit}>Display address</button>
+                <RaisedButton label="Display address" type="submit" id="inputButtonGeocode"  disabled={!this.props.canSubmit} />
+          </Formsy.Form>
+          <RaisedButton label="Clear markers" onClick={this.props.clearStateMarkers} id="clearStateMarkersButton" />
+        </div>
       )
     }
 });
 
-
-
-var InputForm = React.createClass({
-
-  render: function(){
-
-    return (
-        <div>
-          <AddressInputForm setStatewithGeoCode={this.props.setStatewithGeoCode} />
-        </div>
-    )
-  }
-
-});
 
 module.exports = AddressInputForm;

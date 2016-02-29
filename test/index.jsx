@@ -1,2 +1,3 @@
 require('./hapi-test.js');
-//require('./square.test.jsx');
+require('./form.test.jsx');
+//require('./formEnzyme.test.jsx');
