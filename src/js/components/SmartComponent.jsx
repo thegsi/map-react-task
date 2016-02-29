@@ -4,6 +4,12 @@ var Component = require('react').Component;
 var InputForm = require('./Form.jsx');
 var SimpleMap = require('./SimpleMapRender.jsx');
 
+var center = require('turf-center');
+
+
+var mui = require('material-ui');
+var AppBar = mui.AppBar;
+
 
 var SmartComponent = React.createClass({
 
@@ -39,6 +45,53 @@ var SmartComponent = React.createClass({
               })
   },
 
+  setStatewithCenterPoint: function(){
+
+    var stateMarkersArray = this.state.markers.slice();
+
+    var stateMarkersArrayGeoJSON = {
+      "type": "FeatureCollection",
+      "features": []
+    };
+
+    stateMarkersArray.forEach(function(elem, i){
+      var elemLat = elem.position.lat;
+      var elemLng = elem.position.lng;
+
+      var markerGeoJSON = {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+           "type": "Point",
+           "coordinates": [elemLat, elemLng]
+         }
+      }
+
+     stateMarkersArrayGeoJSON.features.push(markerGeoJSON);
+    });
+
+
+    var centerPt = center(stateMarkersArrayGeoJSON);
+
+    var centerLat = centerPt.geometry.coordinates[0];
+    var centerLng = centerPt.geometry.coordinates[1];
+
+    var newMarkerCenter = {
+      position: {
+        lat: centerLat,
+        lng: centerLng
+      },
+      key: "center",
+      defaultAnimation: 2
+    };
+
+    stateMarkersArray.push(newMarkerCenter);
+
+    this.setState({
+                  markers:stateMarkersArray
+    })
+  },
+
   setStatewithGeoCode: function(addressData){
 
     var houseNumber = addressData.House-Number;
@@ -47,7 +100,7 @@ var SmartComponent = React.createClass({
 
     var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + houseNumber + street + city + "&components=country:UK&key=" + "AIzaSyC3u_S_ildAPZJKvq_ztsOt1tjgxCIW5ZU";
 
-    //Allow ajax request to change the component's state
+    //Allows ajax request to change the component's state
     var setStatewithGeoCodeThis = this;
     $.ajax({
       url: url,
@@ -57,24 +110,32 @@ var SmartComponent = React.createClass({
 
         var lat = gMapsresult.results[0].geometry.location.lat;
         var lng = gMapsresult.results[0].geometry.location.lng;
-        var key = gMapsresult.results[0].address_components[5].short_name + " " + setStatewithGeoCodeThis.state.markers.length;
-        //console.log(gMapsresult.results[0].address_components[5].short_name);
+        var key = gMapsresult.results[0].address_components[5].short_name + " : " + setStatewithGeoCodeThis.state.markers.length;
 
-        var newMarker = {
-          position: {
-            lat: lat,
-            lng: lng
-          },
-          key: key,
-          defaultAnimation: 2
-        };
+        if(isNaN(lat) || isNaN(lng)) {
+          return window.alert("This is not a valid address");
+        } else {
+          var newMarker = {
+            position: {
+              lat: lat,
+              lng: lng
+            },
+            key: key,
+            defaultAnimation: 2
+          };
 
-        var stateMarkersArray = setStatewithGeoCodeThis.state.markers.slice();
-        stateMarkersArray.push(newMarker)
+          var stateMarkersArray = setStatewithGeoCodeThis.state.markers.slice();
+          var stateMarkersArrayLength = stateMarkersArray.length - 1;
+          if (stateMarkersArrayLength > 0 && stateMarkersArray[stateMarkersArrayLength].key === "center"){
+            stateMarkersArray.pop();
+          }
+          stateMarkersArray.push(newMarker);
 
-        setStatewithGeoCodeThis.setState({
-                      markers:stateMarkersArray
-                     })
+          setStatewithGeoCodeThis.setState({
+                        markers:stateMarkersArray
+          })
+          setStatewithGeoCodeThis.setStatewithCenterPoint();
+        }
       }
     })
 
@@ -85,6 +146,7 @@ render: function(){
 
   return (
           <div>
+            <AppBar title="Google maps geocoder" />
             <SimpleMap markers={this.state.markers} />
             <InputForm canSubmit={this.state.canSubmit} enableButton={this.enableButton} disableButton={this.disableButton} setStatewithGeoCode={this.setStatewithGeoCode} clearStateMarkers={this.clearStateMarkers} />
           </div>
