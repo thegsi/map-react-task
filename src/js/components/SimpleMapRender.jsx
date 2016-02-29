@@ -9,11 +9,11 @@ var Marker = require("react-google-maps").Marker;
 var SimpleMap = function (props) {
 
   return (
-    <section style={{height: "200px"}}>
+    <section style={{height: "25em"}}>
       <GoogleMapLoader
-         containerElement={<div {...props} style={{height: "100%"}}/>}
+         containerElement={<div {...props} style={{height: "25em"}}/>}
          googleMapElement={
-           <GoogleMap ref={map => console.log("GoogleMap", map)} defaultZoom={3} defaultCenter={{lat:55.936152, lng: -3.1744107}} >
+           <GoogleMap ref={map => console.log("GoogleMap", map)} defaultZoom={5} defaultCenter={{lat:52.169423, lng: -1.225141}}  >
              {props.markers.map((marker, index) => {
                return (
                  <Marker {...marker} />
@@ -27,5 +27,3 @@ var SimpleMap = function (props) {
 }
 
 module.exports = SimpleMap;
-
-// { onRightClick={this.handleMarkerRightclick.bind(this, index)} }
