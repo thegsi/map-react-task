@@ -1,4 +1,4 @@
-var React       = require('react');
+var React = require('react');
 var PropTypes = React.PropTypes;
 
 var Formsy = require('formsy-react');
@@ -8,7 +8,7 @@ var mui = require('material-ui');
 var RaisedButton = mui.RaisedButton;
 
 
-var AddressInputForm  = React.createClass({
+var AddressInputForm = React.createClass({
 
   propTypes:{
     setStatewithGeoCode: React.PropTypes.func,
@@ -18,11 +18,10 @@ var AddressInputForm  = React.createClass({
   },
 
   enableButton: function () {
-      this.props.enableButton();
+    this.props.enableButton();
   },
 
   disableButton: function () {
-
     this.props.disableButton();
   },
 
@@ -36,13 +35,11 @@ var AddressInputForm  = React.createClass({
   },
 
 
-
-
   render: function () {
 
-    var divStyle = {paddingTop:'3em',
-                   paddingRight:'20em',
-                   paddingBottom:'0em',
+    var divStyle = {paddingTop:'1em',
+                   paddingRight:'3em',
+                   paddingBottom:'3em',
                    paddingLeft:'3em',
                    fontFamily: 'Roboto',
                    fontSize: "14px"};
@@ -65,31 +62,34 @@ var AddressInputForm  = React.createClass({
                   value=""
                   type="text"
                   validations="isNumeric"
+                  fullWidth="true"
                   onKeyDown={() => console.log("onEnterKeyDown")}
-                  required required/>
+                  required/>
                 <Input ref="street"
                   name="Street"
                   label="Street"
                   placeholder="Street"
                   value=""
                   type="text"
+                  fullWidth="true"
                   onKeyDown={() => console.log("onEnterKeyDown")}
-                  required required/>
+                  required/>
                 <Input ref="city"
                   name="City"
                   label="City"
                   placeholder="City"
                   value=""
                   type="text"
+                  fullWidth="true"
                   onKeyDown={() => console.log("onEnterKeyDown")}
-                  required required/>
+                  required/>
             <div style={buttonStyle}>
-               <RaisedButton label="Display address" type="submit" id="inputButtonGeocode"  disabled={!this.props.canSubmit} />
+              <RaisedButton label="Display address" type="submit" id="inputButtonGeocode"  disabled={!this.props.canSubmit} fullWidth="true" />
             </div>
           </Formsy.Form>
 
             <div style={buttonStyle}>
-              <RaisedButton label="Clear markers" onClick={this.props.clearStateMarkers} id="clearStateMarkersButton" />
+              <RaisedButton label="Clear markers" onClick={this.props.clearStateMarkers} id="clearStateMarkersButton" fullWidth="true" />
             </div>
         </div>
       )

@@ -1,4 +1,4 @@
-var React       = require('react');
+var React = require('react');
 var Component = require('react').Component;
 
 var InputForm = require('./Form.jsx');
@@ -24,7 +24,7 @@ var SmartComponent = React.createClass({
                  defaultAnimation: 2
                }],
                canSubmit: false
-             }
+      }
   },
 
   enableButton: function () {
@@ -42,7 +42,7 @@ var SmartComponent = React.createClass({
   clearStateMarkers: function(){
     this.setState({
                 markers:[]
-              })
+    })
   },
 
   setStatewithCenterPoint: function(){
@@ -54,6 +54,7 @@ var SmartComponent = React.createClass({
       "features": []
     };
 
+    //Convert Google Maps markers to GeoJSON version or Turf.JS to analyse
     stateMarkersArray.forEach(function(elem, i){
       var elemLat = elem.position.lat;
       var elemLng = elem.position.lng;
@@ -76,19 +77,20 @@ var SmartComponent = React.createClass({
     var centerLat = centerPt.geometry.coordinates[0];
     var centerLng = centerPt.geometry.coordinates[1];
 
+    //Create Google Maps version of centre point marker from Turf.JS GeoJSON result. With more time I would configure Google Maps to use GeoJSON markers.
     var newMarkerCenter = {
       position: {
         lat: centerLat,
         lng: centerLng
       },
       key: "center",
-      defaultAnimation: 2
+      defaultAnimation: 1
     };
 
     stateMarkersArray.push(newMarkerCenter);
 
     this.setState({
-                  markers:stateMarkersArray
+      markers:stateMarkersArray
     })
   },
 
@@ -100,7 +102,7 @@ var SmartComponent = React.createClass({
 
     var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + houseNumber + street + city + "&components=country:UK&key=" + "AIzaSyC3u_S_ildAPZJKvq_ztsOt1tjgxCIW5ZU";
 
-    //Allows ajax request to change the component's state
+    //Change scope so ajax request can change the component's state
     var setStatewithGeoCodeThis = this;
     $.ajax({
       url: url,
@@ -112,6 +114,7 @@ var SmartComponent = React.createClass({
         var lng = gMapsresult.results[0].geometry.location.lng;
         var key = gMapsresult.results[0].address_components[5].short_name + " : " + setStatewithGeoCodeThis.state.markers.length;
 
+        //Error handle for responses with no coordinates
         if(isNaN(lat) || isNaN(lng)) {
           return window.alert("This is not a valid address");
         } else {
@@ -126,13 +129,15 @@ var SmartComponent = React.createClass({
 
           var stateMarkersArray = setStatewithGeoCodeThis.state.markers.slice();
           var stateMarkersArrayLength = stateMarkersArray.length - 1;
+
+          //Remove old center from the state. Possibly not the best way to do this, I added centerpoint late im the day.
           if (stateMarkersArrayLength > 0 && stateMarkersArray[stateMarkersArrayLength].key === "center"){
             stateMarkersArray.pop();
-          }
+          };
           stateMarkersArray.push(newMarker);
 
           setStatewithGeoCodeThis.setState({
-                        markers:stateMarkersArray
+            markers:stateMarkersArray
           })
           setStatewithGeoCodeThis.setStatewithCenterPoint();
         }
@@ -142,16 +147,16 @@ var SmartComponent = React.createClass({
   },
 
 
-render: function(){
+  render: function(){
 
-  return (
-          <div>
-            <AppBar title="Google maps geocoder" />
-            <SimpleMap markers={this.state.markers} />
-            <InputForm canSubmit={this.state.canSubmit} enableButton={this.enableButton} disableButton={this.disableButton} setStatewithGeoCode={this.setStatewithGeoCode} clearStateMarkers={this.clearStateMarkers} />
-          </div>
-        )
-  }
+    return (
+      <div>
+        <AppBar title="Google maps geocoder UK" iconElementLeft={<div></div>} />
+        <SimpleMap markers={this.state.markers} />
+        <InputForm canSubmit={this.state.canSubmit} enableButton={this.enableButton} disableButton={this.disableButton} setStatewithGeoCode={this.setStatewithGeoCode} clearStateMarkers={this.clearStateMarkers} />
+       </div>
+     )
+   }
 
 })
 

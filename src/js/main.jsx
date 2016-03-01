@@ -6,8 +6,8 @@ var rootElement = document.getElementById('react-content');
 
 var SmartComponent = require('./components/SmartComponent.jsx');
 
-  ReactDOM.render(
+ReactDOM.render(
 
   <SmartComponent />,
     rootElement
-  )
+)

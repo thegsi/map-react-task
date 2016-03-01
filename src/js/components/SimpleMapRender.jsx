@@ -19,7 +19,7 @@ var SimpleMap = function (props) {
                  <Marker {...marker} />
                );
              })}
-          </GoogleMap>
+           </GoogleMap>
          }
       />
     </section>
