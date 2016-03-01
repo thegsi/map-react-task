@@ -90,6 +90,7 @@ var AddressInputForm = React.createClass({
 
             <div style={buttonStyle}>
               <RaisedButton label="Clear markers" onClick={this.props.clearStateMarkers} id="clearStateMarkersButton" fullWidth="true" />
+              <h6>Turf.js places bouncing marker at the centre of the other points</h6>
             </div>
         </div>
       )

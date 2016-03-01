@@ -154,7 +154,7 @@ var SmartComponent = React.createClass({
         <AppBar title="Google maps geocoder UK" iconElementLeft={<div></div>} />
         <SimpleMap markers={this.state.markers} />
         <InputForm canSubmit={this.state.canSubmit} enableButton={this.enableButton} disableButton={this.disableButton} setStatewithGeoCode={this.setStatewithGeoCode} clearStateMarkers={this.clearStateMarkers} />
-       </div>
+    </div>
      )
    }
 
